@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "main.h"
 #include "header.h"
 
 // Hauptprogramm
@@ -34,9 +35,11 @@ int main() {
         #define DEBUG
     #endif
 
-    #ifdef DEBUG
+    DEBUG;
+
+    /*#ifdef DEBUG
         printArray();
-    #endif
+    #endif*/
 
     // Präprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
     #ifdef INT_ARRAY
