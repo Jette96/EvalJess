@@ -4,6 +4,7 @@
 #include <time.h>
 #include "main.h"
 #include "header.h"
+#include "function.h"
 
 // Hauptprogramm
 int main() {
@@ -96,3 +97,8 @@ int main() {
 
     return 0; // Programm ohne Fehler beendet
 }
+
+
+//auslagern, 5-7 Testfälle, Begründungen für Vrrgehen des Tests
+//Verschachtelungen, Kommentare gut
+//Anhang komplette Dateine, sonst nur interessante Dateien/Zeilen weniger groß als Ausschnitt drinnen

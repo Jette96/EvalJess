@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include "function.h"
 #include "header.h"
 
 // Array mit zufaelligen Elementen fuellen
