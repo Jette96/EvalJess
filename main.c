@@ -1,147 +1,97 @@
-//"main.c"
+// "main.c"
 #include <stdio.h>
 #include <stdlib.h>
-//#include "function.h"
-//#include "makro.h"
+#include <time.h>
+#include "header.h"
 
-// einfache Hilfsvariablen und Symbole
-#define VALUE -1
-#define SEARCH_ELEMENT ptr
-#define NO_SUCCESS printf("Der gesuchte Wert ist nicht im Array.");
-
-//Array Eigenschaften festlegen
-#define ARRAY_SIZE 10
-
-#ifdef INT_ARRAY 
-    int
-#else 
-    #define CHAR_ARRAY
-    char
-#endif 
-    array[ARRAY_SIZE];
-
-// Ausgabe des Arrays
-#ifdef DEBUG \
-    for(int i = 0; i < ARRAY_SIZE; i++) { \
-        printf("%d ", array[i]); \
-        } 
-#endif
-
-// Funktionskopf der linearen Suche formatieren, je nach Typ des Arrays
-#define ARRAY_SEARCH
-
-#ifdef INT_ARRAY
-    #define ARRAY_SEARCH INT_ARRAY
-#else 
-    #define ARRAY_SEARCH CHAR_ARRAY
-#endif
-
-#define FUNC_LINEAR_SEARCH int linear_search(char *search_element, ARRAY_SEARCH) {
-
-//Array mit Random Zahlen füllen
-#ifdef CHAR_ARRAY 
-
-    void fillArrayWithRandomLetters(CHAR_ARRAY) { // char array[]
-        for (int i = 0; i < ARRAY_SIZE; i++) {
-            array[i] = 'A' + (rand() % 26); // Zufallsbuchstaben zwischen 'A' und 'Z'
-        }
-        array[ARRAY_SIZE] = '\0'; // Null-terminierte Zeichenkette
-    }
-
-#endif 
-
-#ifdef INT_ARRAY
-
-    void fillArrayWithRandomNumbers(INT_ARRAY) { // int array[]
-        for (int i = 0; i < ARRAY_SIZE; i++) {
-            array[i] = rand() % 51; // Zufallszahlen zwischen 0 und 50
-            }
-    }
-
-#endif
-
-//Such-Algorithmus
-    int linear_search(char *search_element, ARRAY_SEARCH) {
-
-        int index = -1; // -1, wenn nicht gefunden
-        
-        //Jedes Element von vorne beginnend wird angeschaut
-        for (int i = 0; i < ARRAY_SIZE; i++)
-        {
-            if(array[i] == search_element) {
-                index = i;
-                break;
-            }
-        }
-
-        return index;
-    }
-
-//Main-Methode
+// Hauptprogramm
 int main() {
-    
+
+    // Index-Variable fuer die Suche mit Default-Wert
+    int index = VALUE;
+
     // Benutzer zur Auswahl einer Option auffordern
     int choice;
     printf("Waehlen Sie eine Option zur Eingabe: 1. Ganzzahl oder 2. Buchstabe.\n");
     scanf("%d", &choice);
 
-    // Switch-Anweisung zur Behandlung der Auswahl
-    switch (choice) {
-        case 1:
-            #define INT_ARRAY
-            // Benutzer zur Eingabe einer Zahl auffordern
-            int number;
-            int *ptr = number;
-            printf("Bitte geben Sie eine beliebige Zahl ein: ");
-            scanf("%d", &number);
-            printf("Sie haben die Zahl %d eingegeben.\n", number);
-            
-            break;
-        case 2:
-            #define CHAR_ARRAY
-            // Benutzer zur Eingabe eines Buchstabens auffordern
-            char letter;
-            char *ptr = letter;
-            printf("Bitte geben Sie einen beliebeigen Buchstaben ein: ");
-            scanf(" %c", &letter);  // Beachte das Leerzeichen vor %c, um Leerzeichen zu überspringen
-            printf("Sie haben den Buchstaben %c eingegeben.\n", letter);
-            break;
-        default:
-            printf("Ungueltige Option.\n");
+    // If-Block: Definition der Direktive & Befüllen des Arrays
+    puts("Array wird generiert...");
+    if (choice == 1) {
+        #define INT_ARRAY
+        fillArrayWithRandomNumbers(array);
+    } else if  ( choice == 2) {
+        #define CHAR_ARRAY
+        fillArrayWithRandomLetters(array);
+    } else {
+        printf("Ungueltige Eingabe.\n");
+        return 1; // Programm wird mit Fehler beendet
     }
 
-    //Array generieren
-    puts("Array is build");
-    #ifdef INT_ARRAY
-       fillArrayWithRandomLetters(array);
-    #endif
-
-    #ifdef CHAR_ARRAY
-       fillArrayWithRandomNumbers(array);
-    #endif
-
-    //Ausgabe des Arrays
-    puts("Generiertes Array: ");
+    // Ausgabe des Arrays
+    puts("Array ausgeben:");
     #ifndef DEBUG
-    #define DEBUG
-    #endif
-    DEBUG;
-
-    //Durchsuchen des Arrays
-    puts("Search");
-
-    #ifdef LINEAR_SEARCH
-       VALUE = linear_suchen(*SEARCH_ELEMENT, array); //hier kommt der Index im Array zurück
+        #define DEBUG
     #endif
 
-    //Ergebnis der Suche
-    puts("Ergebnis");
-    #if VALUE == (-1) 
+    #ifdef DEBUG
+        printArray();
+    #endif
+
+    // Präprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
+    #ifdef INT_ARRAY
+        int number;
+        int* search_element = &number;
+    #elif defined CHAR_ARRAY
+        char letter;
+        char* search_element = &letter;
+    #endif
+
+    // Switch-Case-Verschachtelung zur Benutzereingabe des zu suchenden Elements
+    switch (choice) {
+
+    case 1:
+        // Benutzer zur Eingabe einer Zahl auffordern
+        printf("Bitte geben Sie eine beliebige Zahl ein: \n");
+        scanf("%d", search_element);
+        printf("Sie haben die Zahl %d eingegeben.\n", *search_element);
+        // Suche
+        index = linear_search_int(*search_element, array);
+        break;
+    case 2:
+        // Benutzer zur Eingabe eines Buchstabens auffordern
+        printf("Bitte geben Sie einen beliebeigen Buchstaben ein: \n");
+        scanf(" %c", search_element); // Leerzeichen vor %c, um Leerzeichen zu ueberspringen
+        printf("Sie haben den Buchstaben %c eingegeben.\n", *search_element);
+        // Suche
+        index = linear_search_char(*search_element, array);
+        break;
+    default:
+        printf("Ungueltige Eingabe.\n");
+        return 1; // Programm wird mit Fehler beendet
+    }
+
+    // Ausgabe des Ergebnisses
+    puts("Ergebnis der Suche");
+
+    #define VALUE index // Redefinition
+
+    if (VALUE == (-1)) {
         NO_SUCCESS
-    #else
-        printf("Der gesuchte Wert %c steht an Stelle %i der Liste. ", array[VALUE], (VALUE + 1));
-    #endif
+    } else {
+        #ifdef INT_ARRAY
+            INT_SUCCESS
+        #elif defined CHAR_ARRAY
+            CHAR_SUCCESS
+        #endif
+    }
 
-    return 0;
+    // Pointer freigeben
+    free(search_element);
+
+    return 0; // Programm ohne Fehler beendet
 }
 
+//auslagern, 5-7 Testfälle, Begründungen für Vrrgehen des Tests
+//Verschachtelungen, Kommentare gut
+//Anhang komplette Dateine, sonst nur interessante Dateien/Zeilen weniger groß als Ausschnitt drinnen
