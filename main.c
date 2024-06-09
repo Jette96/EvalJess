@@ -12,6 +12,13 @@ int main() {
     // Index-Variable fuer die Suche mit Default-Wert
     int index = VALUE;
 
+    // Array initialisieren
+    #ifdef INT_ARRAY
+    int array[ARRAY_SIZE];
+    #else // CHAR_ARRAY
+    char array[ARRAY_SIZE + 1]; // +1 für Null-terminierte Zeichenkette
+    #endif
+
     // Benutzer zur Auswahl einer Option auffordern
     int choice;
     printf("Waehlen Sie eine Option zur Eingabe: 1. Ganzzahl oder 2. Buchstabe.\n");
@@ -25,9 +32,6 @@ int main() {
     } else if  ( choice == 2) {
         #define CHAR_ARRAY
         fillArrayWithRandomLetters(array);
-    } else {
-        printf("Ungueltige Eingabe.\n");
-        return 1; // Programm wird mit Fehler beendet
     }
 
     // Ausgabe des Arrays
@@ -37,10 +41,6 @@ int main() {
     #endif
 
     DEBUG;
-
-    /*#ifdef DEBUG
-        printArray();
-    #endif*/
 
     // Präprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
     #ifdef INT_ARRAY
@@ -97,8 +97,3 @@ int main() {
 
     return 0; // Programm ohne Fehler beendet
 }
-
-
-//auslagern, 5-7 Testfälle, Begründungen für Vrrgehen des Tests
-//Verschachtelungen, Kommentare gut
-//Anhang komplette Dateine, sonst nur interessante Dateien/Zeilen weniger groß als Ausschnitt drinnen

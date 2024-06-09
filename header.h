@@ -13,11 +13,4 @@
 // Array Eigenschaften
 #define ARRAY_SIZE 10
 
-// Array initialisieren
-#ifdef INT_ARRAY
-int array[ARRAY_SIZE];
-#else // CHAR_ARRAY
-char array[ARRAY_SIZE + 1]; // +1 für Null-terminierte Zeichenkette
-#endif
-
 #endif
