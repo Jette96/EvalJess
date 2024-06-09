@@ -12,13 +12,6 @@ int main() {
     // Index-Variable fuer die Suche mit Default-Wert
     int index = VALUE;
 
-    // Array initialisieren
-    #ifdef INT_ARRAY
-    int array[ARRAY_SIZE];
-    #else // CHAR_ARRAY
-    char array[ARRAY_SIZE + 1]; // +1 für Null-terminierte Zeichenkette
-    #endif
-
     // Benutzer zur Auswahl einer Option auffordern
     int choice;
     printf("Waehlen Sie eine Option zur Eingabe: 1. Ganzzahl oder 2. Buchstabe.\n");
@@ -26,13 +19,15 @@ int main() {
 
     // If-Block: Definition der Direktive & Befüllen des Arrays
     puts("Array wird generiert...");
-    if (choice == 1) {
-        #define INT_ARRAY
-        fillArrayWithRandomNumbers(array);
-    } else if  ( choice == 2) {
-        #define CHAR_ARRAY
-        fillArrayWithRandomLetters(array);
-    }
+    #if (choice == 1)
+    int array[ARRAY_SIZE];
+    #define INT_ARRAY
+    fillArrayWithRandomNumbers(array);
+    #else // ( choice == 2)
+    #define CHAR_ARRAY
+    char array[ARRAY_SIZE + 1];
+    fillArrayWithRandomLetters(array);
+    #endif
 
     // Ausgabe des Arrays
     puts("Array ausgeben:");

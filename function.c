@@ -4,6 +4,7 @@
 #include <time.h>
 #include "function.h"
 #include "header.h"
+#include "main.h"
 
 // Array mit zufaelligen Elementen fuellen
 void fillArrayWithRandomLetters(char array[]) {
@@ -22,16 +23,20 @@ void fillArrayWithRandomNumbers(int array[]) {
 }
 
 // Ausgabe des Arrays
-void printArray() {
-    for (int i = 0; i < ARRAY_SIZE; i++) {
 #ifdef INT_ARRAY
+void printArray(int array []) {
+    for (int i = 0; i < ARRAY_SIZE; i++) {
         printf("%d ", array[i]);
-#else // CHAR_ARRAY
-        printf("%c ", array[i]);
-#endif
     }
     printf("\n");
 }
+#else // CHAR_ARRAY
+void printArray(char array[]) {
+    for (int i = 0; i < ARRAY_SIZE; i++) {
+        printf("%c ", array[i]);
+    }
+}
+#endif
 
 // Such-Algorithmus
 int linear_search_int(int *search_element, int array[]) {
