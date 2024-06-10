@@ -13,7 +13,11 @@ void fillArrayWithRandomNumbers(int array[]);
 
 // Ausgabe des Arrays
 #ifdef DEBUG
-void printArray();
+#ifdef CHAR_ARRAY
+void printArray(char array[]);
+#elif defined INT_ARRAY
+void printArray(int array[]);
+#endif
 #endif
 
 // Such-Algorithmus

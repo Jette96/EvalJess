@@ -32,10 +32,14 @@ int main() {
     // Ausgabe des Arrays
     puts("Array ausgeben:");
     #ifndef DEBUG
-        #define DEBUG
+    #define DEBUG
     #endif
 
-    DEBUG;
+    #ifdef INT_ARRAY
+        printArray(array);
+    #elif defined CHAR_ARRAY
+        printArray(array);
+    #endif
 
     // Präprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
     #ifdef INT_ARRAY
@@ -69,7 +73,6 @@ int main() {
         break;
     default:
         printf("Ungueltige Eingabe.\n");
-        return 1; // Programm wird mit Fehler beendet
     }
 
     // Ausgabe des Ergebnisses
