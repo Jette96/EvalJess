@@ -54,7 +54,6 @@ int main() {
     switch (choice) {
 
     case 1:
-        #define INT_ARRAY
         // Benutzer zur Eingabe einer Zahl auffordern
         printf("Bitte geben Sie eine beliebige Zahl ein: \n");
         scanf("%d", search_element);
@@ -63,7 +62,6 @@ int main() {
         index = linear_search_int(*search_element, array);
         break;
     case 2:
-        #define CHAR_ARRAY
         // Benutzer zur Eingabe eines Buchstabens auffordern
         printf("Bitte geben Sie einen beliebeigen Buchstaben ein: \n");
         scanf(" %c", search_element); // Leerzeichen vor %c, um Leerzeichen zu ueberspringen
