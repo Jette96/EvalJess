@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "main.h"
-#include "header.h"
+#include "helper.h"
 #include "function.h"
 
 // Hauptprogramm
@@ -12,27 +12,27 @@ int main() {
     // Index-Variable fuer die Suche mit Default-Wert
     int index = VALUE;
 
-    // Benutzer zur Auswahl einer Option auffordern
-    int choice;
-    printf("Waehlen Sie eine Option zur Eingabe: 1. Ganzzahl oder 2. Buchstabe.\n");
-    scanf("%d", &choice);
-
-    // If-Block: Definition der Direktive & Befüllen des Arrays
+    // Generieren des Arrays
     puts("Array wird generiert...");
-    #if (choice == 1)
-    int array[ARRAY_SIZE];
-    #define INT_ARRAY
-    fillArrayWithRandomNumbers(array);
-    #else // ( choice == 2)
-    #define CHAR_ARRAY
-    char array[ARRAY_SIZE + 1];
-    fillArrayWithRandomLetters(array);
+    #if CHOICE == 1
+    int
+    #elif CHOICE == 2
+    char
+    #endif
+        array[SIZE];
+
+    // Befuellen des Arrays
+    puts("Array wird befuellt...");
+    #if CHOICE == 1
+        fillArrayWithRandomNumbers(array);
+    #elif CHOICE == 2
+        fillArrayWithRandomLetters(array);
     #endif
 
     // Ausgabe des Arrays
     puts("Array ausgeben:");
     #ifndef DEBUG
-    #define DEBUG
+        #define DEBUG
     #endif
 
     #ifdef INT_ARRAY
@@ -41,17 +41,17 @@ int main() {
         printArray(array);
     #endif
 
-    // Präprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
+    // Praeprozessordirektiven zur Deklaration von Variablen im Switch-Case-Block
     #ifdef INT_ARRAY
-        int number;
+        int number = VALUE; // VALUE als Default-Wert
         int* search_element = &number;
     #elif defined CHAR_ARRAY
-        char letter;
+        char letter = VALUE; // VALUE als Default-Wert
         char* search_element = &letter;
     #endif
 
     // Switch-Case-Verschachtelung zur Benutzereingabe des zu suchenden Elements
-    switch (choice) {
+    switch (CHOICE) {
 
     case 1:
         // Benutzer zur Eingabe einer Zahl auffordern
@@ -59,37 +59,37 @@ int main() {
         scanf("%d", search_element);
         printf("Sie haben die Zahl %d eingegeben.\n", *search_element);
         // Suche
-        index = linear_search_int(*search_element, array);
+        index = linear_search_int(search_element, array);
         break;
     case 2:
         // Benutzer zur Eingabe eines Buchstabens auffordern
-        printf("Bitte geben Sie einen beliebeigen Buchstaben ein: \n");
+        printf("Bitte geben Sie einen beliebigen Buchstaben ein: \n");
         scanf(" %c", search_element); // Leerzeichen vor %c, um Leerzeichen zu ueberspringen
         printf("Sie haben den Buchstaben %c eingegeben.\n", *search_element);
         // Suche
-        index = linear_search_char(*search_element, array);
+        index = linear_search_char(search_element, array);
         break;
     default:
-        printf("Ungueltige Eingabe.\n");
+        printf("Ungueltige Option.\n");
     }
 
-    // Ausgabe des Ergebnisses
+    // Ausgabe des Ergebnisses mitPraeprozessorcode
     puts("Ergebnis der Suche");
 
     #define VALUE index // Redefinition
 
-    if (VALUE == (-1)) {
-        NO_SUCCESS
-    } else {
+    if(VALUE < 0) {
+        NO_SUCCESS;
+    } else if (VALUE >= 0) {
         #ifdef INT_ARRAY
-            INT_SUCCESS
+            INT_SUCCESS;
         #elif defined CHAR_ARRAY
-            CHAR_SUCCESS
+            CHAR_SUCCESS;
         #endif
     }
 
-    // Pointer freigeben
-    free(search_element);
+    //Pointer leeren
+    search_element = NULL;
 
     return 0; // Programm ohne Fehler beendet
 }
