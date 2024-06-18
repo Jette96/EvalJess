@@ -14,7 +14,7 @@
 #define SIZE 10
 
 //Definition CHOICE fuer Wahl der Cases und bedingte Kompilierung von INT_ARRAY und CHAR_ARRAY
-#define CHOICE 2
+#define CHOICE 1
 
 // Definition der Direktive fuer Art des Arrays
 #if CHOICE == 1
