@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <time.h>
 #include "function.h"
-#include "helper.h"
 #include "main.h"
 
 // Array mit zufaelligen Elementen fuellen
