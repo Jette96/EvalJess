@@ -1,6 +1,7 @@
 // "function.h"
 #ifndef FUNCTION_H_
 #define FUNCTION_H_
+#include "main.h"
 
 // Array mit zufaelligen Elementen fuellen
 #ifdef CHAR_ARRAY
