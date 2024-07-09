@@ -5,6 +5,7 @@
 #include "function.h"
 #include "main.h"
 
+
 // Array mit zufaelligen Elementen fuellen
 #ifdef CHAR_ARRAY
 void fillArrayWithRandomLetters(char array[]) {
